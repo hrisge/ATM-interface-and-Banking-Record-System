@@ -140,6 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ATM interface and Banking Record System.cpp" />
+    <ClCompile Include="DateOfBirth.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DateOfBirth.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

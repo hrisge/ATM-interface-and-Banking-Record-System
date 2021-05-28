@@ -18,5 +18,13 @@
     <ClCompile Include="ATM interface and Banking Record System.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DateOfBirth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DateOfBirth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
