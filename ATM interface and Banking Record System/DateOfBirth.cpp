@@ -14,3 +14,8 @@ void DateOfBirth::setYear(size_t year)
 {
 	this->year = year;
 }
+
+DateOfBirth::~DateOfBirth()
+{
+
+}

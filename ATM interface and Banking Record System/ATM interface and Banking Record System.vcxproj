@@ -141,9 +141,13 @@
   <ItemGroup>
     <ClCompile Include="ATM interface and Banking Record System.cpp" />
     <ClCompile Include="DateOfBirth.cpp" />
+    <ClCompile Include="Name.cpp" />
+    <ClCompile Include="Person.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DateOfBirth.h" />
+    <ClInclude Include="Name.h" />
+    <ClInclude Include="Person.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

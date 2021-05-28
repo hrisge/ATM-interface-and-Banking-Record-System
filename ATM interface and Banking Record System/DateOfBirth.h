@@ -16,4 +16,6 @@ public:
 	virtual size_t getDay() const = 0;
 	virtual size_t getMonth() const = 0;
 	virtual size_t getYear() const = 0;
+
+	virtual ~DateOfBirth();
 };
