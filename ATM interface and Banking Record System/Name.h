@@ -21,7 +21,7 @@ public:
 	void setMidName(const char*);
 	void setLastName(const char*);
 
-	virtual const char* getFirstName() const = 0;
-	virtual const char* getMidName() const = 0;
-	virtual const char* getLastName() const = 0;
+	const char* getFirstName() const;
+	const char* getMidName() const;
+	const char* getLastName() const;
 };

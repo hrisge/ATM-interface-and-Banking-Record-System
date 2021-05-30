@@ -13,9 +13,8 @@ public:
 	void setMonth(size_t);
 	void setYear(size_t);
 
-	virtual size_t getDay() const = 0;
-	virtual size_t getMonth() const = 0;
-	virtual size_t getYear() const = 0;
+	const size_t getDay() const ;
+	const size_t getMonth() const;
+	const size_t getYear() const;
 
-	virtual ~DateOfBirth();
 };

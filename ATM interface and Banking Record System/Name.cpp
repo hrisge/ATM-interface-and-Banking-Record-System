@@ -59,3 +59,18 @@ void Name::free()
 	delete[] midName;
 	delete[] lastName;
 }
+
+const char* Name::getFirstName() const
+{
+	return firstName;
+}
+
+const char* Name::getMidName() const
+{
+	return midName;
+}
+
+const char* Name::getLastName() const
+{
+	return lastName;
+}

@@ -15,7 +15,17 @@ void DateOfBirth::setYear(size_t year)
 	this->year = year;
 }
 
-DateOfBirth::~DateOfBirth()
+const size_t DateOfBirth::getDay() const
 {
+	return day;
+}
 
+const size_t DateOfBirth::getMonth() const
+{
+	return month;
+}
+
+const size_t DateOfBirth::getYear() const
+{
+	return year;
 }
