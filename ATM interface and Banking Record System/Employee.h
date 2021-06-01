@@ -15,6 +15,8 @@ struct Employee : public Person
 
 	const Employee& getEmployee() const;
 
+	void printEmployeeToFile(const char*);
+
 	void createAnClientAccount();
 	void deleteAnClientAccount();
 	void createANewBankAccount();

@@ -2,8 +2,10 @@
 
 std::string convertToString(const char* arr)
 {
-	size_t size = strlen(arr);
 	std::string s = "";
+	if (arr == nullptr)
+		return s;
+	size_t size = strlen(arr);
 	for (size_t i = 0; i < size; i++)
 	{
 		s = s + arr[i];

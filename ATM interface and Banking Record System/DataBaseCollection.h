@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include "Admin.h"
@@ -20,7 +21,11 @@ class DataBaseCollection
 	//std::vector<Client*> clients
 
 	void loadDataBase(const char*, size_t);
-	void saveDataBase();
+	void saveDataBase(const char*, size_t);
+
+	void printAdminsToAFile(const char*, std::vector<Admin*>&);
+	void printEmployeesToAFile(const char*, std::vector<Admin*>&);
+	//void printClientsToAFile(const char*, std::vector<Client*>&);
 
 	const Admin& getAdminFromFile();
 	const Employee& getEmployeeFromFile();

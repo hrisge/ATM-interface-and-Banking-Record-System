@@ -31,6 +31,17 @@ const Admin& Admin::getAdmin() const
 	return *this;
 }
 
+void Admin::printAdminToFile(const char* fileName)
+{
+	std::fstream file(fileName, std::ios::app);
+	if (!file.is_open())
+		throw std::exception("Unable to open file");
+	file << getAccount().getUsername() << "," << getAccount().getPassword() << "," << getEgn() << "," << getName().getFirstName() << "," <<
+		getName().getMidName() << "," << getName().getLastName() << "," << getDateOfBirth().getDay() << "," << getDateOfBirth().getMonth() << "," <<
+		getDateOfBirth().getYear() << "," << getMobileNumber() << "," << getAdress() << "\n";
+	file.close();
+}
+
 void Admin::nothing() const
 {
 

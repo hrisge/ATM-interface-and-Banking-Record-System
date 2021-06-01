@@ -14,6 +14,8 @@ struct Admin : public Person
 
 	const Admin& getAdmin() const;
 
+	void printAdminToFile(const char*);
+
 	void addAnEmployee();
 	void deleteAnEmployee();
 
