@@ -9,6 +9,9 @@ class DateOfBirth
 
 public:
 
+	DateOfBirth();
+	DateOfBirth(size_t, size_t, size_t);
+
 	void setDay(size_t);
 	void setMonth(size_t);
 	void setYear(size_t);

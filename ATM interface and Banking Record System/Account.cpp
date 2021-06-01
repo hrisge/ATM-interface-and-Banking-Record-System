@@ -1,5 +1,15 @@
 #include "Account.h"
 
+Account::Account()
+{
+	setUsername(nullptr);
+	setPassword(nullptr);
+}
+Account::Account(const char* username, const char* password)
+{
+	setUsername(username);
+	setPassword(password);
+}
 
 void Account::setUsername(const char* username)
 {

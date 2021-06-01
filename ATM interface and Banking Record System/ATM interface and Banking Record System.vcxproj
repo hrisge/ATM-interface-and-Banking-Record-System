@@ -143,6 +143,7 @@
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="ATM interface and Banking Record System.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="DataBaseCollection.cpp" />
     <ClCompile Include="DateOfBirth.cpp" />
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="Functions.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Account.h" />
     <ClInclude Include="Admin.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="DataBaseCollection.h" />
     <ClInclude Include="DateOfBirth.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="Functions.h" />

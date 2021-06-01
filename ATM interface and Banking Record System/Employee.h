@@ -10,6 +10,7 @@ struct Employee : public Person
 		const char*);
 	Employee(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, const std::string,
 		const size_t, const size_t, const size_t, const size_t, std::string&);
+	Employee(const Account&, const char*, const Name&, const DateOfBirth&, const size_t, const char*);
 	Employee(const Employee&);
 
 	const Employee& getEmployee() const;

@@ -9,6 +9,7 @@ struct Admin : public Person
 		const char*);
 	Admin(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, const std::string, 
 		const size_t, const size_t, const size_t, const size_t, std::string&);
+	Admin(const Account&, const char*, const Name&, const DateOfBirth&, const size_t, const char*);
 	Admin(const Admin&);
 
 	const Admin& getAdmin() const;

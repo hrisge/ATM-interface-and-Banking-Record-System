@@ -16,6 +16,11 @@ Admin::Admin(const std::string& username, const std::string& password, const std
 {
 
 }
+Admin::Admin(const Account& account, const char* egn, const Name& name, const DateOfBirth& dateOfBirth, const size_t mobile, const char* adress) :
+	Person(account, egn, name, dateOfBirth, mobile, adress)
+{
+
+}
 Admin::Admin(const Admin& other) : Person(other)
 {
 

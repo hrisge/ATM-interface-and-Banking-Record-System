@@ -139,6 +139,15 @@ Person::Person(const std::string& username, const std::string& password, const s
 	setMobileNumber(mobileNumber);
 	setAdress(adress);
 }
+Person::Person(const Account& account, const char* egn, const Name& name, const DateOfBirth& dateOfBirth, const size_t mobile, const char* adress)
+{
+	setAccount(account);
+	setEgn(egn);
+	setName(name);
+	setDateOfBirth(dateOfBirth);
+	setMobileNumber(mobile);
+	setAdress(adress);
+}
 Person::Person(const Person& other)
 {
 	setAccount(other.getAccount());

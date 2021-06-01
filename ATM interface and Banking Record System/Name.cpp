@@ -38,3 +38,22 @@ const std::string& Name::getLastName() const
 {
 	return lastName;
 }
+
+Name::Name(const char* firstName, const char* midName, const char* lastName)
+{
+	setFirstName(firstName);
+	setMidName(midName);
+	setLastName(lastName);
+}
+Name::Name(const std::string& firstName, const std::string& midName, const std::string& lastName)
+{
+	setFirstName(firstName);
+	setMidName(midName);
+	setLastName(lastName);
+}
+Name::Name()
+{
+	setFirstName(nullptr);
+	setMidName(nullptr);
+	setLastName(nullptr);
+}

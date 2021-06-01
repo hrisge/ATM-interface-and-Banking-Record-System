@@ -16,6 +16,11 @@ Employee::Employee(const std::string& username, const std::string& password, con
 {
 
 }
+Employee::Employee(const Account& account, const char* egn, const Name& name, const DateOfBirth& dateOfBirth, const size_t mobile, const char* adress) :
+	Person(account, egn, name, dateOfBirth, mobile, adress)
+{
+
+}
 Employee::Employee(const Employee& other) : Person(other)
 {
 

@@ -20,6 +20,7 @@ public:
 		const char*);
 	Person(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, 
 		const size_t, const size_t, const size_t, const size_t, const std::string&);
+	Person(const Account&, const char*, const Name&, const DateOfBirth&, const size_t, const char*);
 
 	Person(const Person&);	
 	virtual ~Person() = default;

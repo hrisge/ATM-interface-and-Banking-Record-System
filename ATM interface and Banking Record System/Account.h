@@ -11,6 +11,9 @@ class Account
 
 public:
 
+	Account();
+	Account(const char*, const char*);
+
 	void setUsername(const std::string&);
 	void setUsername(const char*);
 	void setPassword(const std::string&);

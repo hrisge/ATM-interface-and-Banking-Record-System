@@ -11,6 +11,10 @@ class Name
 
 public:
 
+	Name();
+	Name(const char*, const char*, const char*);
+	Name(const std::string&, const std::string&, const std::string&);
+
 	void setFirstName(const char*);
 	void setFirstName(const std::string);
 	void setMidName(const char*);
