@@ -18,7 +18,6 @@ struct Admin : public Person
 	//void printPersonToFile(const char*);
 
 	void addAnEmployee(const std::vector<Employee*>&, bool&, Employee&);
-	void deleteAnEmployee();
 
 	void nothing() const override;
 

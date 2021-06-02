@@ -22,7 +22,8 @@ class DataBaseCollection
 
 	void free();
 
-	size_t searchAdminByEgn(std::string&);
+	int searchAdminByEgn(const std::string&);
+	int searchEmployeeByEgn(const std::string&);
 
 	void loadDataBase(const char*, size_t);
 	void saveDataBase(const char*, size_t);
@@ -41,8 +42,8 @@ public:
 	DataBaseCollection& operator=(const DataBaseCollection&) = delete;
 	~DataBaseCollection();
 
-	void addAnEmployee(std::string&);
-	void deleteAnEmployee();
+	void addAnEmployee(const std::string&);
+	void deleteAnEmployee(const std::string&);
 
 	const std::vector<Admin*>& getAdmins() const;
 	const std::vector<Employee*>& getEmployees() const;

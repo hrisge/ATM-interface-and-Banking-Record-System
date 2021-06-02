@@ -140,7 +140,7 @@ void DataBaseCollection::printEmployeesToAFile(const char* fileName, std::vector
 	}
 }
 
-void DataBaseCollection::addAnEmployee(std::string& adminEgn)
+void DataBaseCollection::addAnEmployee(const std::string& adminEgn)
 {
 	size_t adminIndex = searchAdminByEgn(adminEgn);
 	bool isValid = 1;
@@ -153,7 +153,7 @@ void DataBaseCollection::addAnEmployee(std::string& adminEgn)
 	employees.push_back(new Employee(newOne));
 }
 
-size_t DataBaseCollection::searchAdminByEgn(std::string& adminEgn)
+int DataBaseCollection::searchAdminByEgn(const std::string& adminEgn)
 {
 	size_t numberOfAdmins = admins.size();
 	for (size_t i = 0; i < numberOfAdmins; i++)
@@ -161,6 +161,36 @@ size_t DataBaseCollection::searchAdminByEgn(std::string& adminEgn)
 		if (admins[i]->getEgn() == adminEgn)
 			return i;
 	}
+	std::cout << "No admin with such egn was found \n";
+	return -1;
+}
+
+int DataBaseCollection::searchEmployeeByEgn(const std::string& employeeEgn)
+{
+	size_t numberOfEmployees = employees.size();
+	for (size_t i = 0; i < numberOfEmployees; i++)
+	{
+		if (employees[i]->getEgn() == employeeEgn)
+			return i;
+	}
+	std::cout << "No employee with such egn was found \n";
+	return -1;
+
+}
+
+void DataBaseCollection::deleteAnEmployee(const std::string& adminEgn)
+{
+	size_t adminIndex = searchAdminByEgn(adminEgn);
+	std::cout << "$ Input EGN to delete: \n";
+	std::string egnToDelete;
+	std::getline(std::cin, egnToDelete);
+	int EmployeeIndexToDelete = searchEmployeeByEgn(egnToDelete);
+	if (EmployeeIndexToDelete == -1)
+	{
+		std::cout << "There is no such user with that egn \n";
+		return;
+	}
+	employees.erase(employees.begin() + EmployeeIndexToDelete);
 }
 
 const const std::vector<Admin*>& DataBaseCollection::getAdmins() const
