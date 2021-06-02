@@ -109,14 +109,14 @@ const std::string& Person::getAdress() const
 	return adress;
 }
 
-Person::Person()
+Person::Person() : account(" ", " "), egn("1000000000"), name(" ", " ", " "), dateOfBirth(1, 1, 1900), mobileNumber(0), adress(" ")
 {
-	setAccount(nullptr, nullptr);
-	setEgn("0");
-	setName(nullptr, nullptr, nullptr);
-	setDateOfBirth(1, 1, 1900);
-	setMobileNumber(0);
-	setAdress(nullptr);
+	//setAccount(nullptr, nullptr);
+	//setEgn("1000000000");
+	//setName(nullptr, nullptr, nullptr);
+	//setDateOfBirth(1, 1, 1900);
+	//setMobileNumber(0);
+	//setAdress(nullptr);
 }
 Person::Person(const char* username, const char* password, const char* egn, const char* firstName, const char* midName, const char* lastName,
 	const size_t dayOfBirth, const size_t monthOfBirth, const size_t yearOfBirth, const size_t mobileNumber, const char* adress)
@@ -148,6 +148,15 @@ Person::Person(const Account& account, const char* egn, const Name& name, const 
 	setMobileNumber(mobile);
 	setAdress(adress);
 }
+Person::Person(const Account& account, const std::string& egn, const Name& name, const DateOfBirth& dateOfBirth, const size_t mobile, const std::string& adress)
+{
+	setAccount(account);
+	setEgn(egn);
+	setName(name);
+	setDateOfBirth(dateOfBirth);
+	setMobileNumber(mobile);
+	setAdress(adress);
+}
 Person::Person(const Person& other)
 {
 	setAccount(other.getAccount());
@@ -156,4 +165,13 @@ Person::Person(const Person& other)
 	setDateOfBirth(other.getDateOfBirth());
 	setMobileNumber(other.getMobileNumber());
 	setAdress(other.getAdress());
+}
+
+void Person::printPersonToAFile(const char* fileName)
+{
+	std::fstream file(fileName, std::ios::app);
+	file << getAccount().getUsername() << "," << getAccount().getPassword() << "," << getEgn() << "," << getName().getFirstName() << "," <<
+		getName().getMidName() << "," << getName().getLastName() << "," << getDateOfBirth().getDay() << "," << getDateOfBirth().getMonth() << "," <<
+		getDateOfBirth().getYear() << "," << getMobileNumber() << "," << getAdress() << "\n";
+	file.close();
 }

@@ -31,18 +31,86 @@ const Admin& Admin::getAdmin() const
 	return *this;
 }
 
-void Admin::printAdminToFile(const char* fileName)
-{
-	std::fstream file(fileName, std::ios::app);
-	if (!file.is_open())
-		throw std::exception("Unable to open file");
-	file << getAccount().getUsername() << "," << getAccount().getPassword() << "," << getEgn() << "," << getName().getFirstName() << "," <<
-		getName().getMidName() << "," << getName().getLastName() << "," << getDateOfBirth().getDay() << "," << getDateOfBirth().getMonth() << "," <<
-		getDateOfBirth().getYear() << "," << getMobileNumber() << "," << getAdress() << "\n";
-	file.close();
-}
+//void Admin::printAdminToFile(const char* fileName)
+//{
+//	std::fstream file(fileName, std::ios::app);
+//	file << getAccount().getUsername() << "," << getAccount().getPassword() << "," << getEgn() << "," << getName().getFirstName() << "," <<
+//		getName().getMidName() << "," << getName().getLastName() << "," << getDateOfBirth().getDay() << "," << getDateOfBirth().getMonth() << "," <<
+//		getDateOfBirth().getYear() << "," << getMobileNumber() << "," << getAdress() << "\n";
+//	file.close()
+//}
 
 void Admin::nothing() const
 {
+
+}
+
+void Admin::addAnEmployee(const std::vector<Employee*>& employees, bool& isValid, Employee& newEmployee)
+{
+	system("cls");
+	std::cout << "$ createNewEmployee \n"<<"$ Input username: \n";
+	std::string username;
+	std::string password;
+	std::getline(std::cin, username);
+	
+	std::cout << "$ Input password: \n";
+	std::getline(std::cin, password);
+
+	std::string egn;
+	std::cout << "$ Input EGN: \n";
+	std::getline(std::cin, egn);
+
+	size_t numberOfClients = employees.size();
+	for (size_t i = 0; i < numberOfClients; i++)
+	{
+		isValid = employees[i]->getEgn() == egn;
+		if (isValid)
+		{
+			std::cout << "[ Employee with this EGN exists! ] \n";
+			Employee a;
+			return;
+		}
+	}
+
+	isValid = 0;
+
+	std::string firstName;
+	std::cout << "$ Input first name: \n";
+	std::getline(std::cin, firstName);
+
+	std::string midName;
+	std::cout << "$ Input middle name: \n";
+	std::getline(std::cin, midName);
+
+	std::string lastName;
+	std::cout << "$ Input last name:  \n";
+	std::getline(std::cin, lastName);
+
+	size_t dayOfBirth, monthOfBirth, yearOfBirth;
+	std::cout << "$ Input date of birth: \n";
+	std::cin >> dayOfBirth;
+	std::cin >> monthOfBirth;
+	std::cin >> yearOfBirth;
+
+	size_t mobileNumber;
+	std::cout << "$ Input phone number: \n";
+	std::cin >> mobileNumber;
+
+	std::string adress;
+	std::cout << "$ Input address : \n";
+	std::cin.ignore();
+	std::getline(std::cin, adress);
+
+	Account account(username, password);
+	Name fullName(firstName, midName, lastName);
+	DateOfBirth dateOfbirth(dayOfBirth, monthOfBirth, yearOfBirth);
+
+	newEmployee.setAccount(account);
+	newEmployee.setEgn(egn);
+	newEmployee.setName(fullName);
+	newEmployee.setDateOfBirth(dateOfbirth);
+	newEmployee.setMobileNumber(mobileNumber);
+	newEmployee.setAdress(adress);
+
 
 }

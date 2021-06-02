@@ -21,9 +21,32 @@ Employee::Employee(const Account& account, const char* egn, const Name& name, co
 {
 
 }
+Employee::Employee(const Account& account, const std::string& egn, const Name& name, const DateOfBirth& dateOfBirth, const size_t mobile, const std::string& adress) :
+	Person(account, egn, name, dateOfBirth, mobile, adress)
+{
+
+}
 Employee::Employee(const Employee& other) : Person(other)
 {
 
+}
+Employee& Employee::operator=(const Employee& other)
+{
+	if (this != &other)
+	{
+		copyFrom(other);
+	}
+	return *this;
+}
+
+void Employee::copyFrom(const Employee& other)
+{
+	this->setAccount(other.getAccount());
+	this->setEgn(other.getEgn());
+	this->setName(other.getName());
+	this->setDateOfBirth(other.getDateOfBirth());
+	this->setMobileNumber(other.getMobileNumber());
+	this->setAdress(other.getAdress());
 }
 
 const Employee& Employee::getEmployee() const
@@ -31,7 +54,13 @@ const Employee& Employee::getEmployee() const
 	return *this;
 }
 
-
+//void Employee::printPersonToFile(const char* fileName) const
+//{
+//	std::fstream file(fileName, std::ios::app);
+//	if (!file.is_open())
+//		throw std::exception("Unable to open file");
+//	
+//}
 
 void Employee::nothing() const
 {

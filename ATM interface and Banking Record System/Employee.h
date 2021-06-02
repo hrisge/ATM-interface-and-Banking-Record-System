@@ -11,11 +11,13 @@ struct Employee : public Person
 	Employee(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, const std::string,
 		const size_t, const size_t, const size_t, const size_t, std::string&);
 	Employee(const Account&, const char*, const Name&, const DateOfBirth&, const size_t, const char*);
+	Employee(const Account&, const std::string&, const Name&, const DateOfBirth&, const size_t, const std::string&);
 	Employee(const Employee&);
+	Employee& operator=(const Employee&);
 
 	const Employee& getEmployee() const;
 
-	void printEmployeeToFile(const char*);
+	//void printPersonToFile(const char*) const override;
 
 	void createAnClientAccount();
 	void deleteAnClientAccount();
@@ -27,4 +29,6 @@ struct Employee : public Person
 	void personalReportForAClient();
 
 	void nothing() const override;
+private:
+	void copyFrom(const Employee&);
 };

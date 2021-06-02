@@ -8,9 +8,24 @@ DataBaseCollection::DataBaseCollection()
 }
 DataBaseCollection::~DataBaseCollection()
 {
-	saveDataBase("admins1.txt", 1);
+	saveDataBase("admins.txt", 1);
 	saveDataBase("empolyees.txt", 2);
 	//saveDataBase();
+
+	free();
+}
+
+void DataBaseCollection::free()
+{
+	size_t numberOfAdmins = admins.size();
+	size_t numberOfEmployees = employees.size();
+	//size_t numberOfClients = clients.size();
+
+	for (size_t i = 0; i < numberOfAdmins; i++)
+		delete admins[i];
+	for (size_t i = 0; i < numberOfEmployees; i++)
+		delete employees[i];
+
 }
 
 void DataBaseCollection::loadDataBase(const char* fileName, size_t accountType) 
@@ -92,7 +107,7 @@ void DataBaseCollection::saveDataBase(const char* fileName, size_t accountType)
 	switch (accountType)
 	{
 	case 1: printAdminsToAFile(fileName, admins) ; break;
-	//case 2: ; break;
+	case 2: printEmployeesToAFile(fileName, employees); break;
 	//case 3: //clients.push_back(new Cient(username, password, EGN, name, date, phone, address)); break;
 	default:
 		break;
@@ -108,6 +123,51 @@ void DataBaseCollection::printAdminsToAFile(const char* fileName, std::vector<Ad
 	size_t numberOfAdmins = admins.size();
 	for (size_t i = 0; i < numberOfAdmins; i++)
 	{
-		admins[i]->printAdminToFile(fileName);
+		admins[i]->printPersonToAFile(fileName);
 	}
+}
+
+void DataBaseCollection::printEmployeesToAFile(const char* fileName, std::vector<Employee*>& employees)
+{
+	std::fstream file(fileName, std::ios::out | std::ios::trunc);
+	if (!file.is_open())
+		throw std::exception("Unable to open file");
+	file.close();
+	size_t numberOfEmployees = employees.size();
+	for (size_t i = 0; i < numberOfEmployees; i++)
+	{
+		employees[i]->printPersonToAFile(fileName);
+	}
+}
+
+void DataBaseCollection::addAnEmployee(std::string& adminEgn)
+{
+	size_t adminIndex = searchAdminByEgn(adminEgn);
+	bool isValid = 1;
+	Employee newOne;
+	while (isValid)
+	{
+		admins[adminIndex]->addAnEmployee(employees, isValid, newOne);
+	}
+	std::cout << "[ Employee account successfully created! ] \n";
+	employees.push_back(new Employee(newOne));
+}
+
+size_t DataBaseCollection::searchAdminByEgn(std::string& adminEgn)
+{
+	size_t numberOfAdmins = admins.size();
+	for (size_t i = 0; i < numberOfAdmins; i++)
+	{
+		if (admins[i]->getEgn() == adminEgn)
+			return i;
+	}
+}
+
+const const std::vector<Admin*>& DataBaseCollection::getAdmins() const
+{
+	return admins;
+}
+const std::vector<Employee*>& DataBaseCollection::getEmployees() const
+{
+	return employees;
 }

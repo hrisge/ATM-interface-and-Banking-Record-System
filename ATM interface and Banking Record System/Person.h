@@ -21,6 +21,7 @@ public:
 	Person(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, 
 		const size_t, const size_t, const size_t, const size_t, const std::string&);
 	Person(const Account&, const char*, const Name&, const DateOfBirth&, const size_t, const char*);
+	Person(const Account&, const std::string&, const Name&, const DateOfBirth&, const size_t, const std::string&);
 
 	Person(const Person&);	
 	virtual ~Person() = default;
@@ -47,4 +48,5 @@ public:
 	void setAdress(const std::string&);
 
 	virtual void nothing() const = 0;
+	void printPersonToAFile(const char*);
 };

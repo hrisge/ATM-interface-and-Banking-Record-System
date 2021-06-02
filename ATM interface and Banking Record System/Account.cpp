@@ -10,6 +10,11 @@ Account::Account(const char* username, const char* password)
 	setUsername(username);
 	setPassword(password);
 }
+Account::Account(const std::string& username, const std::string& password)
+{
+	setUsername(username);
+	setPassword(password);
+}
 
 void Account::setUsername(const char* username)
 {

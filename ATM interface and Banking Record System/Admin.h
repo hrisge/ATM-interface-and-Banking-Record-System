@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Person.h"
+#include "Employee.h"
 
 struct Admin : public Person
 {
@@ -14,11 +15,12 @@ struct Admin : public Person
 
 	const Admin& getAdmin() const;
 
-	void printAdminToFile(const char*);
+	//void printPersonToFile(const char*);
 
-	void addAnEmployee();
+	void addAnEmployee(const std::vector<Employee*>&, bool&, Employee&);
 	void deleteAnEmployee();
 
 	void nothing() const override;
+
 
 };

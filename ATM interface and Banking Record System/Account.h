@@ -13,6 +13,7 @@ public:
 
 	Account();
 	Account(const char*, const char*);
+	Account(const std::string&, const std::string&);
 
 	void setUsername(const std::string&);
 	void setUsername(const char*);

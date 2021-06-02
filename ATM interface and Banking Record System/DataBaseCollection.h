@@ -20,11 +20,15 @@ class DataBaseCollection
 	std::vector<Employee*> employees;
 	//std::vector<Client*> clients
 
+	void free();
+
+	size_t searchAdminByEgn(std::string&);
+
 	void loadDataBase(const char*, size_t);
 	void saveDataBase(const char*, size_t);
 
 	void printAdminsToAFile(const char*, std::vector<Admin*>&);
-	void printEmployeesToAFile(const char*, std::vector<Admin*>&);
+	void printEmployeesToAFile(const char*, std::vector<Employee*>&);
 	//void printClientsToAFile(const char*, std::vector<Client*>&);
 
 	const Admin& getAdminFromFile();
@@ -37,10 +41,11 @@ public:
 	DataBaseCollection& operator=(const DataBaseCollection&) = delete;
 	~DataBaseCollection();
 
-	void addAnEmployee();
+	void addAnEmployee(std::string&);
 	void deleteAnEmployee();
 
-
+	const std::vector<Admin*>& getAdmins() const;
+	const std::vector<Employee*>& getEmployees() const;
 
 
 
