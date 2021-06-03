@@ -1,6 +1,6 @@
 #include "Functions.h"
 
-std::string convertToString(const char* arr)
+std::string& convertToString(const char* arr)
 {
 	std::string s = "";
 	if (arr == nullptr)
@@ -11,6 +11,28 @@ std::string convertToString(const char* arr)
 		s = s + arr[i];
 	}
 	return s;
+}
+char* convertToChar(const std::string& str)
+{
+	char arr[MAX_CHAR_LEN];
+	size_t size = str.size();
+	for (size_t i = 0; i < size; i++)
+	{
+		arr[i] = str[i];
+	}
+	arr[size] = '\0';
+	return arr;
+}
+std::string& convertSize_tToString(size_t number)
+{
+	std::string numberStr;
+	while (number != 0)
+	{
+		size_t num = (number % 10);
+		number / 10;
+		numberStr.push_back(num + 48);
+	}
+	return numberStr;
 }
 
 int countLines(const char* fileName)
