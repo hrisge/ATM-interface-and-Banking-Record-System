@@ -23,9 +23,15 @@ char* convertToChar(const std::string& str)
 	arr[size] = '\0';
 	return arr;
 }
-std::string& convertSize_tToString(size_t number)
+std::string convertSize_tToString(size_t number)
 {
 	std::string numberStr;
+	if (number == 0)
+	{
+		numberStr.push_back(number + 48);
+		return numberStr;
+	}
+
 	while (number != 0)
 	{
 		size_t num = (number % 10);
@@ -74,4 +80,12 @@ void copyNextWordfromAnArr(char* dest, char* source)
 		k++;
 	}
 	source[k] = '\0';
+}
+
+void eraseFileInformation(const char* fileName)
+{
+	std::fstream file(fileName, std::ios::out | std::ios::trunc);
+	if (!file.is_open())
+		throw std::exception("Unable to open file");
+	file.close();
 }

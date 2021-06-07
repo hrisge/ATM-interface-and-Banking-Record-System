@@ -12,29 +12,29 @@ const size_t MAX_EGN_LEN = 10;
 const size_t DATE_MAX_LEN = 16;
 const size_t MAX_PHONE_LEN = 16;
 const size_t MAX_ADRESS_LEN = 256;
+const size_t LAST_FOUR_DIGITS_LEN = 4;
+const size_t MAX_BANK_CARDS_FILENAME = 32;
 
 
 class DataBaseCollection
 {
 	std::vector<Admin*> admins;
 	std::vector<Employee*> employees;
-	//std::vector<Client*> clients
+	std::vector<Client*> clients;
 
 	void free();
 
 	int searchAdminByEgn(const std::string&);
 	int searchEmployeeByEgn(const std::string&);
+	int searchClientByEgn(const std::string&);
 
 	void loadDataBase(const char*, size_t);
 	void saveDataBase(const char*, size_t);
 
 	void printAdminsToAFile(const char*, std::vector<Admin*>&);
 	void printEmployeesToAFile(const char*, std::vector<Employee*>&);
-	//void printClientsToAFile(const char*, std::vector<Client*>&);
+	void printClientsToAFile(const char*, std::vector<Client*>&);
 
-	const Admin& getAdminFromFile();
-	const Employee& getEmployeeFromFile();
-	//const Client& getClientFromFile();
 
 public:
 	DataBaseCollection();
@@ -45,8 +45,13 @@ public:
 	void addAnEmployee(const std::string&);
 	void deleteAnEmployee(const std::string&);
 
+	void addAClient(const std::string&);
+	void deleteAClient(const std::string&);
+	void addANewBankAccount(const std::string&);
+
 	const std::vector<Admin*>& getAdmins() const;
 	const std::vector<Employee*>& getEmployees() const;
+	const std::vector<Client*>& getClients() const;
 
 
 

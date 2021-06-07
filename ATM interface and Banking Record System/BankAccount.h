@@ -18,7 +18,6 @@ class BankAccount
 public:
 
 	void addANewCard(const std::string&);
-	void loadCards();
 
 	const std::string& getName() const;
 	const std::string& getAmmountOfFunds() const;
@@ -26,9 +25,15 @@ public:
 	const size_t getNumberOfCards() const;
 
 	void setName(const std::string&, const std::string&);
+	void setName(const std::string&);
 	void setAmmountOfFunds(const std::string&);
 	void setCardsCollections(const char*);
 	void setNumberOfCards(const int);
 
+	std::string& getFromBankAccountNameTheLastFourDigitsOfEgn();
 
+	void printBankAccountToFile(const char*) const;
+
+	BankAccount(const std::string&, const std::string&, const std::string&);
+	BankAccount(const std::string&, const std::string&, size_t);
 };

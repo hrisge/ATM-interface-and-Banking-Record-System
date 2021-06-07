@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "Person.h"
+#include "Client.h"
 
 struct Employee : public Person
 {
@@ -19,9 +20,8 @@ struct Employee : public Person
 
 	//void printPersonToFile(const char*) const override;
 
-	void createAnClientAccount();
-	void deleteAnClientAccount();
-	void createANewBankAccount();
+	void createAClientAccount(std::vector<Client*>&, bool, Client&);
+	void createANewBankAccount(Client*, bool);
 	void addANewCardToABankAccount();
 	void closeABankAccount();
 	void closeACardToABankAccount();

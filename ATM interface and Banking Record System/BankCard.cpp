@@ -21,7 +21,8 @@ void BankCard::setName(const std::string& name)
 }
 void BankCard::setPIN()
 {
-	PIN = ((rand() % 9000) + 999);
+	srand(time(NULL));
+	PIN = rand() % 9000 + 1000;
 }
 void BankCard::setPIN(const std::string& PIN)
 {
@@ -31,6 +32,7 @@ void BankCard::setPIN(const std::string& PIN)
 void BankCard::printCardToFile(const char* fileName)
 {
 	std::fstream file(fileName, std::ios::app);
+
 	file << getName() << "," << getPIN() << "\n";
 	file.close();
 }
