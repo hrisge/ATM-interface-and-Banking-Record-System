@@ -30,9 +30,12 @@ public:
 	void setCardsCollections(const char*);
 	void setNumberOfCards(const int);
 
-	std::string& getFromBankAccountNameTheLastFourDigitsOfEgn();
+	int checkCardName(const std::string&);
+	void closeACard(size_t);
 
-	void printBankAccountToFile(const char*) const;
+	void getFromBankAccountNameTheLastFourDigitsOfEgn(std::string&);
+
+	void printBankAccountToFile(const char*);
 
 	BankAccount(const std::string&, const std::string&, const std::string&);
 	BankAccount(const std::string&, const std::string&, size_t);

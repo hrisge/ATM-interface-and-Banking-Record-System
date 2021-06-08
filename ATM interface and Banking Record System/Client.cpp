@@ -7,10 +7,21 @@ void Client::nothing() const
 
 void Client::loadBankAccounts() 
 {
-	char* egnArr;
-	egnArr = convertToChar(getEgn());
-	size_t sizeOfFile = countLines(egnArr);
+	char egnArr[MAX_FILENAME];
+	copyStringToArr(getEgn(), egnArr);
+	
+
+	egnArr[10] = '.';
+	egnArr[11] = 't';
+	egnArr[12] = 'x';
+	egnArr[13] = 't';
+	egnArr[14] = '\0';
+	
 	std::ifstream file(egnArr);
+	if (!file.is_open())
+		return;
+
+	size_t sizeOfFile = countLines(egnArr);
 	for (size_t i = 0; i < sizeOfFile - 1; i++)
 	{
 		char bankAccountNameBuff[MAX_BANKACCOUNT_NAME_SIZE];
@@ -26,13 +37,14 @@ void Client::loadBankAccounts()
 		file.seekg(2, 1);
 
 		this->numberOfBankAccounts++;
-		std::string newBankAccountName = convertToString(bankAccountNameBuff);
-		std::string newBankAccountFunds = convertToString(fundsBuff);
+		std::string newBankAccountName;
+		convertToString(bankAccountNameBuff, newBankAccountName);
+		std::string newBankAccountFunds;
+		convertToString(fundsBuff, newBankAccountFunds);
 		size_t newNumberOfCards = atoi(numberOfCardsBuff);
 		bankAccounts.push_back(new BankAccount(newBankAccountName, newBankAccountFunds, newNumberOfCards));
 		
 	}
-	delete[] egnArr;
 }
 
 
@@ -84,10 +96,27 @@ bool Client::checkDeposit(const std::string& deposit)
 	bool res;
 	for (size_t i = 0; i < size - 1; i++)
 	{
-		res = (deposit[i] > '0' && deposit[i] < '9');
+		res = ((deposit[i] >= '0') && (deposit[i] <= '9'));
 	}
 	return res;
 }
+int Client::checkAccountName(const std::string& accountNameToCheck)
+{
+	for (size_t i = 0; i < getNumberOfAccounts(); i++)
+	{
+		if (accountNameToCheck == getBankAccounts()[i]->getName())
+			return i;
+	}
+	return -1;
+}
+void Client::closeABankAccount(size_t bankAccountToCloseIndex)
+{
+	bankAccounts.erase(bankAccounts.begin() + bankAccountToCloseIndex);
+}
+//void Client::closeACard(size_t accountIndexToClose, size_t cardIndex)
+//{
+//	bankAccounts[accountIndexToClose]->closeACard(cardIndex);
+//}
 
 Client::Client(const char* username, const char* password, const char* egn, const char* firstName, const char* midName, const char* lastName,
 	const size_t dayOfBirth, const size_t monthOfBirth, const size_t yearOfBirth, const size_t mobileNumber, const char* adress) : 

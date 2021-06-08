@@ -18,7 +18,7 @@ Account::Account(const std::string& username, const std::string& password)
 
 void Account::setUsername(const char* username)
 {
-	this->username = convertToString(username);
+	convertToString(username, this->username);
 }
 void Account::setUsername(const std::string& username)
 {
@@ -26,7 +26,7 @@ void Account::setUsername(const std::string& username)
 }
 void Account::setPassword(const char* password)
 {
-	this->password = convertToString(password);
+	convertToString(password, this->password);
 }
 void Account::setPassword(const std::string& password)
 {

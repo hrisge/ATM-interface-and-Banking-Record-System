@@ -3,7 +3,7 @@
 
 void Name::setFirstName(const char* firstName)
 {
-	this->firstName = convertToString(firstName);
+	convertToString(firstName, this->firstName);
 }
 void Name::setFirstName(const std::string firstName)
 {
@@ -11,7 +11,7 @@ void Name::setFirstName(const std::string firstName)
 }
 void Name::setMidName(const char* midName)
 {
-	this->midName = convertToString(midName);
+	convertToString(midName, this->midName);
 }
 void Name::setMidName(const std::string midName)
 {
@@ -19,7 +19,7 @@ void Name::setMidName(const std::string midName)
 }
 void Name::setLastName(const char* lastName)
 {
-	this->lastName = convertToString(lastName);
+	convertToString(lastName, this->lastName);
 }
 void Name::setLastName(const std::string lastName)
 {

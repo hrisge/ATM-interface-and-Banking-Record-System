@@ -7,6 +7,7 @@
 
 const size_t EGN_SIZE = 10;
 const size_t MAX_BANKACCOUNT_NAME_SIZE = 16;
+const size_t MAX_FILENAME = 64;
 
 class Client : public Person
 {
@@ -14,7 +15,6 @@ class Client : public Person
 	size_t numberOfBankAccounts;
 
 	bool checkDeposit(const std::string&);
-
 
 public:
 	Client() = default;
@@ -28,9 +28,12 @@ public:
 	const std::vector<BankAccount*>& getBankAccounts() const;
 	const size_t getNumberOfAccounts() const;
 	
-	
+	int checkAccountName(const std::string&);
+
 	void addABankAccount();
 	void loadBankAccounts();
+	void closeABankAccount(size_t);
+	void closeACard(size_t, size_t);
 
 	void nothing() const override;
 

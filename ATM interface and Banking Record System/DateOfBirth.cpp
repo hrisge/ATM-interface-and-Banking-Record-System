@@ -15,7 +15,7 @@ DateOfBirth::DateOfBirth(size_t dayOfBirth, size_t monthOfBirth, size_t yearOfBi
 
 void DateOfBirth::setDay(size_t day)
 {
-	if (day < 1 || day>12)
+	if (day < 1 || day>31)
 		throw std::exception("Day of birth parameter is too small or too big");
 	this->day = day;
 }

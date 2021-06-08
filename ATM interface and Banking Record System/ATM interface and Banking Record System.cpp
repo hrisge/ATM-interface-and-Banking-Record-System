@@ -14,8 +14,9 @@ int main()
     /*convertToChar(egn);*/
 
 
-    Client a("gosho", "mastikaledena", "0295738573", "georgi", "subev", "PASHATA", 6, 10, 1999, 0345724, "liulin");
-    a.addABankAccount();
-    a.getBankAccounts()[0]->addANewCard(a.getEgn());
+    std::string randomEgn = collection.getEmployees()[0]->getEgn();
+    //collection.addAClient(randomEgn);
+    //collection.addANewBankAccount(randomEgn); //proveri dali uvelichava indeksite w imenata
+    collection.addANewBankCard(randomEgn); //ne zapiswa wuw faila
 
 }

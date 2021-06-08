@@ -59,7 +59,7 @@ void Employee::nothing() const
 
 }
 
-void Employee::createAClientAccount(std::vector<Client*>& clients, bool isValid, Client& newClient)
+void Employee::createAClientAccount(std::vector<Client*>& clients, Client& newClient)
 {
 	system("cls");
 	std::cout << "$ createNewClient \n" << "$ Input username: \n";
@@ -77,16 +77,14 @@ void Employee::createAClientAccount(std::vector<Client*>& clients, bool isValid,
 	size_t numberOfClients = clients.size();
 	for (size_t i = 0; i < numberOfClients; i++)
 	{
-		isValid = clients[i]->getEgn() == egn;
+		bool isValid = clients[i]->getEgn() == egn;
 		if (isValid)
 		{
 			std::cout << "[ Employee with this EGN exists! ] \n";
-			//Client a;
+			std::cout << "[ Try another EGN ] \n";
 			return;
 		}
 	}
-
-	isValid = 0;
 
 	std::string firstName;
 	std::cout << "$ Input first name: \n";
@@ -128,9 +126,58 @@ void Employee::createAClientAccount(std::vector<Client*>& clients, bool isValid,
 	newClient.addABankAccount();
 
 }
-void Employee::createANewBankAccount(Client* client, bool hasBeenCreated)
+void Employee::createANewBankAccount(Client* client)
 {
 	client->addABankAccount();
 	std::cout << "[ Bank account has been created succesfully ] \n";
 
+}
+void Employee::addANewCardToABankAccount(BankAccount* accountToAdd, const std::string& egnOfClient)
+{
+	accountToAdd->addANewCard(egnOfClient);
+}
+void Employee::closeABankAccount(Client* client, size_t bankAccountIndToClose)
+{
+	client->closeABankAccount(bankAccountIndToClose);
+}
+void Employee::closeACardToABankAccount(BankAccount* bankAccount, size_t cardIndToClose)
+{
+	bankAccount->closeACard(cardIndToClose);
+}
+void Employee::reportOfAllClients(const std::vector<Client*>& clients)
+{
+	size_t numberOfClients = clients.size();
+	for (size_t i = 0; i < numberOfClients; i++)
+	{
+		size_t numberOfAccounts = clients[i]->getNumberOfAccounts();
+		size_t totalNumberOfCards = 0;
+		for (size_t j = 0; j < numberOfAccounts; i++)
+		{
+			totalNumberOfCards += clients[i]->getBankAccounts()[j]->getNumberOfCards();
+		}
+		std::cout << "EGN: " << clients[i]->getEgn() << " Number of Bank Accounts: " << numberOfAccounts << " All cards count: " << totalNumberOfCards << "\n";
+	}
+}
+void Employee::personalReportForAClient(const Client* client)
+{
+	system("CLS");
+	std::cout << "$ individualReport " << client->getEgn() << "\n" << "-------Client------- \n";
+	std::cout << "EGN: " << client->getEgn() << "\n";
+	std::cout << "BirthDate: " << client->getDateOfBirth().getDay() << " " << client->getDateOfBirth().getMonth() << " " << client->getDateOfBirth().getYear() << "\n";
+	std::cout << "Phone number: " << client->getMobileNumber() << "\n";
+	std::cout << "Adress: " << client->getAdress() << "\n";
+	std::cout << "Number of Accounts: " << client->getNumberOfAccounts() << "\n";
+	for (size_t i = 0; i < client->getNumberOfAccounts(); i++)
+	{
+		std::cout << "----Account" << i + 1 << "----- \n";
+		std::cout << "Acc number: " << client->getBankAccounts()[i]->getName() << "\n";
+		std::cout << "Balance: " << client->getBankAccounts()[i]->getAmmountOfFunds() << "\n";
+		std::cout << "Number of Cards: " << client->getBankAccounts()[i]->getNumberOfCards() << "\n";
+		for (size_t j = 0; j < client->getBankAccounts()[i]->getNumberOfCards(); j++)
+		{
+			std::cout << "----Card" << j + 1 << "----- \n";
+			std::cout << "Card number: " << client->getBankAccounts()[i]->getCardsCollection()[j]->getName() << "\n";
+			std::cout << "PIN: " << client->getBankAccounts()[i]->getCardsCollection()[j]->getPIN() << "\n";
+		}
+	}
 }

@@ -1,16 +1,14 @@
 #include "Functions.h"
 
-std::string& convertToString(const char* arr)
+void convertToString(const char* arr, std::string& location)
 {
-	std::string s = "";
 	if (arr == nullptr)
-		return s;
+		return;
 	size_t size = strlen(arr);
 	for (size_t i = 0; i < size; i++)
 	{
-		s = s + arr[i];
+		location = location + arr[i];
 	}
-	return s;
 }
 char* convertToChar(const std::string& str)
 {
@@ -39,6 +37,16 @@ std::string convertSize_tToString(size_t number)
 		numberStr.push_back(num + 48);
 	}
 	return numberStr;
+}
+
+void copyStringToArr(const std::string& str, char* arr)
+{
+	size_t sizeOfStr = str.size();
+	for (size_t i = 0; i < sizeOfStr; i++)
+	{
+		arr[i] = str[i];
+	}
+	arr[sizeOfStr] = '\0';
 }
 
 int countLines(const char* fileName)
@@ -82,10 +90,3 @@ void copyNextWordfromAnArr(char* dest, char* source)
 	source[k] = '\0';
 }
 
-void eraseFileInformation(const char* fileName)
-{
-	std::fstream file(fileName, std::ios::out | std::ios::trunc);
-	if (!file.is_open())
-		throw std::exception("Unable to open file");
-	file.close();
-}

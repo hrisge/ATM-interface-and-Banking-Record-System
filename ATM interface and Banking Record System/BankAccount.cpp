@@ -17,6 +17,8 @@ void BankAccount::setAmmountOfFunds(const std::string& ammountOfFunds)
 void BankAccount::setCardsCollections(const char* fileName)
 {
 	size_t numberOfCards = countLines(fileName);
+	if (numberOfCards == -1)
+		return;
 	std::ifstream file(fileName);
 	if (!file.is_open())
 		throw std::exception("Unable to open file");
@@ -31,8 +33,8 @@ void BankAccount::setCardsCollections(const char* fileName)
 		file.seekg(2, 1);
 
 		std::string cardName, cardPIN;
-		cardName = convertToString(cardNameBuff);
-		cardPIN = convertToString(cardPINBuff);
+		convertToString(cardNameBuff, cardName);
+		convertToString(cardPINBuff, cardPIN);
 
 		cardsCollection.push_back(new BankCard(cardName, cardPIN));
 		setNumberOfCards(1);
@@ -77,6 +79,21 @@ void BankAccount::addANewCard(const std::string& egn)
 	setNumberOfCards(1);
 }
 
+int BankAccount::checkCardName(const std::string& cardToCheckName)
+{
+	for (size_t i = 0; i < getNumberOfCards(); i++)
+	{
+		if (cardToCheckName == getCardsCollection()[i]->getName())
+			return i;
+	}
+	return -1;
+}
+void BankAccount::closeACard(size_t cardIndexToClose)
+{
+	cardsCollection.erase(cardsCollection.begin() + cardIndexToClose);
+	std::cout << "[ Successfully deleted card! ] \n";
+}
+
 BankAccount::BankAccount(const std::string& bankAccountName, const std::string& newBankAccountFunds, size_t numberOfCards)
 {
 	setName(bankAccountName);
@@ -91,17 +108,18 @@ BankAccount::BankAccount(const std::string& lastFourDigitsOfEgn, const std::stri
 
 }
 
-std::string& BankAccount::getFromBankAccountNameTheLastFourDigitsOfEgn()
+void BankAccount::getFromBankAccountNameTheLastFourDigitsOfEgn(std::string& lastFourDigits)
 {
-	std::string lastFourDigits;
-	for(size_t i=8; i<12;i++)
-		lastFourDigits.push_back(getName()[i]);
-	return lastFourDigits;
+	for (size_t i = 8; i < 12; i++)
+	{
+		lastFourDigits.push_back(this->getName()[i]);
+	}
+
 }
 
-void BankAccount::printBankAccountToFile(const char* fileName) const
+void BankAccount::printBankAccountToFile(const char* fileName) 
 {
-	std::fstream file(fileName, std::ios::app);
+	std::ofstream file(fileName, std::ios::ate | std::ios::trunc);
 	if (!file.is_open())
 		throw std::exception("Unable to open file");
 	file << getName() << "," << getAmmountOfFunds() << "," << getNumberOfCards() << "\n";

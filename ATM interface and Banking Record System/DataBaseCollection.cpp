@@ -91,16 +91,9 @@ void DataBaseCollection::loadDataBase(const char* fileName, size_t accountType)
 		size_t mobileNumber = atoi(mobileNumberBuff);
 
 		char addressBuff[MAX_ADRESS_LEN];
-		if (accountType == 3)
-		{
-			file.get(addressBuff, MAX_ADRESS_LEN, ',');
-			file.seekg(1, 1);
-		}
-		else
-		{
-			file.get(addressBuff, MAX_ADRESS_LEN, '\n');
-			file.seekg(2, 1);
-		}
+
+		file.get(addressBuff, MAX_ADRESS_LEN, '\n');
+		file.seekg(2, 1);
 
 
 		switch (accountType)
@@ -119,9 +112,17 @@ void DataBaseCollection::loadDataBase(const char* fileName, size_t accountType)
 			for (size_t j = 0; j < numberOfBankAccounts; j++)
 			{
 				std::string cardsFileName;
-				cardsFileName = cardsFileName + clients.back()->getEgn() + "00" + clients.back()->getBankAccounts()[j]->getFromBankAccountNameTheLastFourDigitsOfEgn();
+				std::string lastFourDigits;
+				clients.back()->getBankAccounts()[j]->getFromBankAccountNameTheLastFourDigitsOfEgn(lastFourDigits);
+				cardsFileName += clients.back()->getEgn();
+				cardsFileName += "00";
+				cardsFileName += lastFourDigits;
+				cardsFileName += ".txt";
 
-				clients.back()->getBankAccounts()[j]->setCardsCollections(convertToChar(cardsFileName));
+				char fileOfCardsName[MAX_FILENAME_SIZE];
+				copyStringToArr(cardsFileName, fileOfCardsName);
+
+				clients.back()->getBankAccounts()[j]->setCardsCollections(fileOfCardsName);
 			}
 		}
 	}
@@ -141,7 +142,10 @@ void DataBaseCollection::saveDataBase(const char* fileName, size_t accountType)
 
 void DataBaseCollection::printAdminsToAFile(const char* fileName, std::vector<Admin*>& admins)
 {
-	eraseFileInformation(fileName);
+	std::fstream file(fileName, std::ios::out | std::ios::trunc);
+	if (!file.is_open())
+		throw std::exception("Unable to open file");
+		file.close();
 	size_t numberOfAdmins = admins.size();
 	for (size_t i = 0; i < numberOfAdmins; i++)
 	{
@@ -151,7 +155,10 @@ void DataBaseCollection::printAdminsToAFile(const char* fileName, std::vector<Ad
 
 void DataBaseCollection::printEmployeesToAFile(const char* fileName, std::vector<Employee*>& employees)
 {
-	eraseFileInformation(fileName);
+	std::fstream file(fileName, std::ios::out | std::ios::trunc);
+	if (!file.is_open())
+		throw std::exception("Unable to open file");
+	file.close();
 	size_t numberOfEmployees = employees.size();
 	for (size_t i = 0; i < numberOfEmployees; i++)
 	{
@@ -161,28 +168,47 @@ void DataBaseCollection::printEmployeesToAFile(const char* fileName, std::vector
 
 void DataBaseCollection::printClientsToAFile(const char* fileName, std::vector<Client*>& clients)
 {
-	eraseFileInformation(fileName);
+	std::fstream file(fileName, std::ios::out | std::ios::trunc);
+	if (!file.is_open())
+		throw std::exception("Unable to open file");
+	file.close();
 	size_t numberOfClients = clients.size();
 	for (size_t i = 0; i < numberOfClients; i++)
 	{
 		clients[i]->printPersonToAFile(fileName);
+		std::fstream fileOfClients(fileName);
 		size_t numberOfBankAccounts = clients[i]->getNumberOfAccounts();
 		for (size_t j = 0; j < numberOfBankAccounts; j++)
 		{
-			clients[i]->getBankAccounts()[j]->printBankAccountToFile(convertToChar(clients[i]->getEgn()));
+			std::string nameOfAccountFile = clients[i]->getEgn();
+			nameOfAccountFile += ".txt";
+			char accountFileName[MAX_FILENAME_SIZE];
+			copyStringToArr(nameOfAccountFile, accountFileName);
+			clients[i]->getBankAccounts()[j]->printBankAccountToFile(accountFileName);
+
 			size_t numberOfBankCardsToAccount = clients[i]->getBankAccounts()[j]->getNumberOfCards();
 
 			std::string cardsFileName;
-			cardsFileName = cardsFileName + clients[i]->getEgn() + "00" + clients[i]->getBankAccounts()[j]->getFromBankAccountNameTheLastFourDigitsOfEgn();
-			eraseFileInformation(convertToChar(cardsFileName));
+			cardsFileName = cardsFileName + clients[i]->getEgn();
+			cardsFileName = cardsFileName + "00";
+
+			std::string lastFourDigits;
+			clients[i]->getBankAccounts()[j]->getFromBankAccountNameTheLastFourDigitsOfEgn(lastFourDigits);
+			
+			cardsFileName = cardsFileName + lastFourDigits;
+			cardsFileName = cardsFileName + ".txt";
+			
+			std::ofstream cardsFile(cardsFileName, std::ios::ate | std::ios::trunc);
+			if (!cardsFile.is_open())
+				throw std::exception("Unable to open file");
 
 			for (size_t k = 0; k < numberOfBankCardsToAccount; k++)
 			{
 				clients[i]->getBankAccounts()[j]->getCardsCollection()[k]->printCardToFile(convertToChar(cardsFileName));
 			}
+			cardsFile.close();
 		}
 	}
-
 }
 
 void DataBaseCollection::addAnEmployee(const std::string& adminEgn)
@@ -201,12 +227,8 @@ void DataBaseCollection::addAnEmployee(const std::string& adminEgn)
 void DataBaseCollection::addAClient(const std::string& employeeEgn)
 {
 	size_t employeeIndex = searchEmployeeByEgn(employeeEgn);
-	bool isValid = 1;
 	Client newOne;
-	while (isValid)
-	{
-		employees[employeeIndex]->createAClientAccount(clients, isValid, newOne);
-	}
+	employees[employeeIndex]->createAClientAccount(clients, newOne);
 	std::cout << "[ Client account successfully created! ] \n";
 	clients.push_back(new Client(newOne));
 }
@@ -276,7 +298,6 @@ void DataBaseCollection::deleteAClient(const std::string& employeeEgn)
 	}
 	clients.erase(clients.begin() + clientIndexToDelete);
 }
-
 void DataBaseCollection::addANewBankAccount(const std::string& employeeEgn)
 {
 	size_t employeeIndex = searchEmployeeByEgn(employeeEgn);
@@ -289,11 +310,116 @@ void DataBaseCollection::addANewBankAccount(const std::string& employeeEgn)
 		std::cout << "[ No such client exists! ] \n";
 		return;
 	}
+	getEmployees()[employeeIndex]->createANewBankAccount(clients[clientIndex]);
+}
+void DataBaseCollection::addANewBankCard(const std::string& employeeEgn)
+{
+	size_t employeeIndex = searchEmployeeByEgn(employeeEgn);
+	std::string egnOfClient;
+	std::cout << "$ Input EGN of client: \n";
+	std::getline(std::cin, egnOfClient);
+	int clientIndex = searchClientByEgn(egnOfClient);
+	if (clientIndex == -1)
+	{
+		std::cout << "[ No such client exists! ] \n";
+		return;
+	}
 
-	bool hasBeenCreated = 0;
-	getEmployees()[employeeIndex]->createANewBankAccount(clients[clientIndex], hasBeenCreated);
+	std::string accountName;
+	std::cout << "$ Input Bank Account name: \n";
+	std::getline(std::cin, accountName);
+	int accountNameIndex = clients[clientIndex]->checkAccountName(accountName);
+	if (accountNameIndex == -1)
+	{
+		std::cout << "[ No such bank account exists! ] \n";
+		return;
+	}
+
+	employees[employeeIndex]->addANewCardToABankAccount(clients[clientIndex]->getBankAccounts()[accountNameIndex], egnOfClient);
+}
+void DataBaseCollection::closeABankAccount(const std::string& employeeEgn)
+{
+	size_t employeeIndex = searchEmployeeByEgn(employeeEgn);
+	std::string egnOfClient;
+	std::cout << "$ Input EGN of client: \n";
+	std::getline(std::cin, egnOfClient);
+	int clientIndex = searchClientByEgn(egnOfClient);
+	if (clientIndex == -1)
+	{
+		std::cout << "[ No such client exists! ] \n";
+		return;
+	}
+	
+	std::string accountName;
+	std::cout << "$ Input Bank Account name: \n";
+	std::getline(std::cin, accountName);
+	int accountNameIndex = clients[clientIndex]->checkAccountName(accountName);
+	if (accountNameIndex == -1)
+	{
+		std::cout << "[ No such bank account exists! ] \n";
+		return;
+	}
+
+	employees[employeeIndex]->closeABankAccount(clients[clientIndex], accountNameIndex);
+}
+void DataBaseCollection::closeABankCard(const std::string& employeeEgn)
+{
+	size_t employeeIndex = searchEmployeeByEgn(employeeEgn);
+	std::string egnOfClient;
+	std::cout << "$ Input EGN of client: \n";
+	std::getline(std::cin, egnOfClient);
+	int clientIndex = searchClientByEgn(egnOfClient);
+	if (clientIndex == -1)
+	{
+		std::cout << "[ No such client exists! ] \n";
+		return;
+	}
+
+	std::string accountName;
+	std::cout << "$ Input Bank Account name: \n";
+	std::getline(std::cin, accountName);
+	int accountNameIndex = clients[clientIndex]->checkAccountName(accountName);
+	if (accountNameIndex == -1)
+	{
+		std::cout << "[ No such bank account exists! ] \n";
+		return;
+	}
+
+	std::string cardName;
+	std::cout << "$ Input Bank card name: \n";
+	std::getline(std::cin, cardName);
+	int cardIndex = clients[clientIndex]->getBankAccounts()[accountNameIndex]->checkCardName(cardName);
+	if (cardIndex == -1)
+	{
+		std::cout << "[ No such card exists! ] \n";
+		return;
+	}
+
+	employees[employeeIndex]->closeACardToABankAccount(clients[clientIndex]->getBankAccounts()[accountNameIndex], cardIndex);
 
 }
+void DataBaseCollection::reportOfClients(const std::string& employeeEgn)
+{
+	size_t employeeIndex = searchEmployeeByEgn(employeeEgn);
+	employees[employeeIndex]->reportOfAllClients(getClients());
+	std::cout << "[ Report complete! ] \n";
+}
+void DataBaseCollection::reportAClient(const std::string& employeeEgn)
+{
+	size_t employeeIndex = searchEmployeeByEgn(employeeEgn);
+	std::string egnOfClient;
+	std::cout << "$ Input EGN of client: \n";
+	std::getline(std::cin, egnOfClient);
+	int clientIndex = searchClientByEgn(egnOfClient);
+	if (clientIndex == -1)
+	{
+		std::cout << "[ No such client exists! ] \n";
+		return;
+	}
+
+
+}
+
 
 const const std::vector<Admin*>& DataBaseCollection::getAdmins() const
 {

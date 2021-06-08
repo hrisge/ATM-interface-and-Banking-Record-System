@@ -20,13 +20,13 @@ struct Employee : public Person
 
 	//void printPersonToFile(const char*) const override;
 
-	void createAClientAccount(std::vector<Client*>&, bool, Client&);
-	void createANewBankAccount(Client*, bool);
-	void addANewCardToABankAccount();
-	void closeABankAccount();
-	void closeACardToABankAccount();
-	void reportOfAllClients();
-	void personalReportForAClient();
+	void createAClientAccount(std::vector<Client*>&, Client&);
+	void createANewBankAccount(Client*);
+	void addANewCardToABankAccount(BankAccount*, const std::string&);
+	void closeABankAccount(Client*, size_t);
+	void closeACardToABankAccount(BankAccount*, size_t);
+	void reportOfAllClients(const std::vector<Client*>&);
+	void personalReportForAClient(const Client*);
 
 	void nothing() const override;
 private:

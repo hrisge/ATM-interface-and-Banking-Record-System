@@ -14,6 +14,8 @@ const size_t MAX_PHONE_LEN = 16;
 const size_t MAX_ADRESS_LEN = 256;
 const size_t LAST_FOUR_DIGITS_LEN = 4;
 const size_t MAX_BANK_CARDS_FILENAME = 32;
+const size_t MAX_NUMBER_OF_CHARS_FOR_BANKACCOUNT = 4;
+const size_t MAX_FILENAME_SIZE = 64;
 
 
 class DataBaseCollection
@@ -48,6 +50,11 @@ public:
 	void addAClient(const std::string&);
 	void deleteAClient(const std::string&);
 	void addANewBankAccount(const std::string&);
+	void addANewBankCard(const std::string&);
+	void closeABankAccount(const std::string&);
+	void closeABankCard(const std::string&);
+	void reportOfClients(const std::string&);
+	void reportAClient(const std::string&);
 
 	const std::vector<Admin*>& getAdmins() const;
 	const std::vector<Employee*>& getEmployees() const;
