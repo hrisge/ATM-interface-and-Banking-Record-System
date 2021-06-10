@@ -67,7 +67,6 @@ void Admin::addAnEmployee(const std::vector<Employee*>& employees, bool& isValid
 		if (isValid)
 		{
 			std::cout << "[ Employee with this EGN exists! ] \n";
-			//Employee a;
 			return;
 		}
 	}

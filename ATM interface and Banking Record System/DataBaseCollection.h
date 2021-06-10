@@ -56,6 +56,10 @@ public:
 	void reportOfClients(const std::string&);
 	void reportAClient(const std::string&);
 
+	void inputMoney(const std::string&);
+	void withdrawMoney(const std::string&);
+	void checkBalance(const std::string&);
+
 	const std::vector<Admin*>& getAdmins() const;
 	const std::vector<Employee*>& getEmployees() const;
 	const std::vector<Client*>& getClients() const;

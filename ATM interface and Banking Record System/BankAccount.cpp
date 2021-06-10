@@ -14,7 +14,7 @@ void BankAccount::setAmmountOfFunds(const std::string& ammountOfFunds)
 {
 	this->ammountOfFunds = ammountOfFunds;
 }
-void BankAccount::setCardsCollections(const char* fileName)
+void BankAccount::setCardsCollections(const std::string& fileName)
 {
 	size_t numberOfCards = countLines(fileName);
 	if (numberOfCards == -1)
@@ -22,6 +22,9 @@ void BankAccount::setCardsCollections(const char* fileName)
 	std::ifstream file(fileName);
 	if (!file.is_open())
 		throw std::exception("Unable to open file");
+	
+	this->numberOfCards = 0;
+
 	for (size_t i = 0; i < numberOfCards-1; i++)
 	{
 		char cardNameBuff[MAX_CARD_NAME];
@@ -29,7 +32,7 @@ void BankAccount::setCardsCollections(const char* fileName)
 		file.seekg(1, 1);
 
 		char cardPINBuff[MAX_CARD_NAME];
-		file.get(cardNameBuff, MAX_CARD_NAME, '\n');
+		file.get(cardPINBuff, MAX_CARD_NAME, '\n');
 		file.seekg(2, 1);
 
 		std::string cardName, cardPIN;
@@ -90,8 +93,17 @@ int BankAccount::checkCardName(const std::string& cardToCheckName)
 }
 void BankAccount::closeACard(size_t cardIndexToClose)
 {
+	setNumberOfCards(-1);
 	cardsCollection.erase(cardsCollection.begin() + cardIndexToClose);
 	std::cout << "[ Successfully deleted card! ] \n";
+}
+void BankAccount::deleteCardsCollection()
+{
+	for (int i = getNumberOfCards() - 1; i >= 0; i--)
+	{
+		cardsCollection.erase(cardsCollection.begin() + i);
+
+	}
 }
 
 BankAccount::BankAccount(const std::string& bankAccountName, const std::string& newBankAccountFunds, size_t numberOfCards)
@@ -117,9 +129,9 @@ void BankAccount::getFromBankAccountNameTheLastFourDigitsOfEgn(std::string& last
 
 }
 
-void BankAccount::printBankAccountToFile(const char* fileName) 
+void BankAccount::printBankAccountToFile(const std::string& fileName) 
 {
-	std::ofstream file(fileName, std::ios::ate | std::ios::trunc);
+	std::ofstream file(fileName, std::ios::app);
 	if (!file.is_open())
 		throw std::exception("Unable to open file");
 	file << getName() << "," << getAmmountOfFunds() << "," << getNumberOfCards() << "\n";

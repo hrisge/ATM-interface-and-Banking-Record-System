@@ -33,10 +33,20 @@ std::string convertSize_tToString(size_t number)
 	while (number != 0)
 	{
 		size_t num = (number % 10);
-		number / 10;
+		number= number / 10;
 		numberStr.push_back(num + 48);
 	}
 	return numberStr;
+}
+size_t convertStringToSize_t(const std::string& str)
+{
+	size_t result = 0;
+	size_t sizeOfStr = str.size();
+	for (int i = 0; i <sizeOfStr; i++)
+	{
+		result = 10 * result + (str[i] - 48);
+	}
+	return result;
 }
 
 void copyStringToArr(const std::string& str, char* arr)
@@ -49,7 +59,7 @@ void copyStringToArr(const std::string& str, char* arr)
 	arr[sizeOfStr] = '\0';
 }
 
-int countLines(const char* fileName)
+int countLines(const std::string& fileName)
 {
 	std::ifstream f(fileName);
 	if (!f.is_open())

@@ -24,5 +24,5 @@ public:
 	void setPIN();
 	void setPIN(const std::string&);
 
-	void printCardToFile(const char*);
+	void printCardToFile(const std::string&);
 };

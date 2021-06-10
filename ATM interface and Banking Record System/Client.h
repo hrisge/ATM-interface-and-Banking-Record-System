@@ -27,13 +27,19 @@ public:
 	const Client& getClient() const;
 	const std::vector<BankAccount*>& getBankAccounts() const;
 	const size_t getNumberOfAccounts() const;
+
+	void setNumberOfBankAccounts(int);
 	
 	int checkAccountName(const std::string&);
 
 	void addABankAccount();
 	void loadBankAccounts();
 	void closeABankAccount(size_t);
-	void closeACard(size_t, size_t);
+	void deleteABankAccount();
+
+	void inputFunds();
+	void withdrawFunds();
+	void checkBalanceOfAccount();
 
 	void nothing() const override;
 

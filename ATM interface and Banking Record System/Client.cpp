@@ -7,21 +7,15 @@ void Client::nothing() const
 
 void Client::loadBankAccounts() 
 {
-	char egnArr[MAX_FILENAME];
-	copyStringToArr(getEgn(), egnArr);
+	std::string fileName = getEgn() + ".txt";
 	
-
-	egnArr[10] = '.';
-	egnArr[11] = 't';
-	egnArr[12] = 'x';
-	egnArr[13] = 't';
-	egnArr[14] = '\0';
-	
-	std::ifstream file(egnArr);
+	std::ifstream file(fileName);
 	if (!file.is_open())
 		return;
 
-	size_t sizeOfFile = countLines(egnArr);
+	this->numberOfBankAccounts = 0;
+
+	size_t sizeOfFile = countLines(fileName);
 	for (size_t i = 0; i < sizeOfFile - 1; i++)
 	{
 		char bankAccountNameBuff[MAX_BANKACCOUNT_NAME_SIZE];
@@ -60,6 +54,10 @@ const size_t Client::getNumberOfAccounts() const
 {
 	return numberOfBankAccounts;
 }
+void Client::setNumberOfBankAccounts(int i)
+{
+	numberOfBankAccounts = numberOfBankAccounts + i;
+}
 
 void Client::addABankAccount()
 {
@@ -68,10 +66,12 @@ void Client::addABankAccount()
 		std::cout << "[ This user is unable ] \n";
 		return;
 	}
+
 	system("CLS");
 	std::string lastFourDigits;
 	for (size_t i = 6; i < 10; i++)
 		lastFourDigits.push_back(getEgn()[i]);
+	
 	std::cout << "$ Funds to deposit:" << "\n";
 	std::string fundsDeposited;
 	std::getline(std::cin, fundsDeposited);
@@ -80,11 +80,14 @@ void Client::addABankAccount()
 		std::cout << "[ You have entered invalid symbols try again ] \n";
 		std::getline(std::cin, fundsDeposited);
 	}
+	
 	std::string nameOfAccount;
+	
 	nameOfAccount.insert(0, "00MYBANK");
 	nameOfAccount.append(lastFourDigits);
 	std::string numberOfAccountsStr = convertSize_tToString(getNumberOfAccounts());
 	nameOfAccount.append(numberOfAccountsStr);
+	
 	bankAccounts.push_back(new BankAccount(nameOfAccount, fundsDeposited, 0));
 	std::cout << "[ Successfully created new bank account ] \n";
 	numberOfBankAccounts++;
@@ -111,12 +114,105 @@ int Client::checkAccountName(const std::string& accountNameToCheck)
 }
 void Client::closeABankAccount(size_t bankAccountToCloseIndex)
 {
+	getBankAccounts()[bankAccountToCloseIndex]->deleteCardsCollection();
+
+	std::string fileNameOFCards = getEgn() + getBankAccounts()[bankAccountToCloseIndex]->getName() + ".txt";
+	char cardsFileName[MAX_FILENAME];
+	copyStringToArr(fileNameOFCards, cardsFileName);
+	
+	remove(cardsFileName);
+
+	setNumberOfBankAccounts(-1);
 	bankAccounts.erase(bankAccounts.begin() + bankAccountToCloseIndex);
 }
-//void Client::closeACard(size_t accountIndexToClose, size_t cardIndex)
-//{
-//	bankAccounts[accountIndexToClose]->closeACard(cardIndex);
-//}
+void Client::deleteABankAccount()
+{
+	for (int i = getNumberOfAccounts() - 1; i >= 0; i--)
+	{
+		getBankAccounts()[i]->deleteCardsCollection();
+
+		std::string fileNameOFCards = getEgn() + getBankAccounts()[i]->getName() + ".txt";
+		std::ofstream cardsFile(fileNameOFCards, std::ios::ate | std::ios::trunc);
+		if (!cardsFile.is_open())
+			throw std::exception("Unable to open file");
+		cardsFile.close();
+
+		bankAccounts.erase(bankAccounts.begin() + i);
+	}
+}
+
+void Client::inputFunds()
+{
+	std::string accountName;
+	std::cout << "$ Input Bank Account name: \n";
+	std::getline(std::cin, accountName);
+	int accountNameIndex = checkAccountName(accountName);
+	if (accountNameIndex == -1)
+	{
+		std::cout << "[ No such bank account exists! ] \n";
+		return;
+	}
+
+	std::cout << "$ Input amount of money: \n";
+	std::string amount;
+	std::getline(std::cin, amount);
+	if (!checkDeposit(amount))
+	{
+		std::cout << "[ Invalid symbols inputed in amount of money ] \n";
+		return;
+	}
+
+	size_t currentAmmount = convertStringToSize_t(getBankAccounts()[accountNameIndex]->getAmmountOfFunds());
+	size_t inputAmount = convertStringToSize_t(amount);
+
+	size_t result = currentAmmount + inputAmount;
+
+	std::string resultStr = convertSize_tToString(result);
+	getBankAccounts()[accountNameIndex]->setAmmountOfFunds(resultStr);
+}
+void Client::withdrawFunds()
+{
+	std::string accountName;
+	std::cout << "$ Input Bank Account name: \n";
+	std::getline(std::cin, accountName);
+	int accountNameIndex = checkAccountName(accountName);
+	if (accountNameIndex == -1)
+	{
+		std::cout << "[ No such bank account exists! ] \n";
+		return;
+	}
+
+	std::cout << "$ Input amount of money you want to withdraw: \n";
+	std::string amount;
+	std::getline(std::cin, amount);
+	if (!checkDeposit(amount))
+	{
+		std::cout << "[ Invalid symbols inputed in amount of money ] \n";
+		return;
+	}
+
+	size_t currentAmmount = convertStringToSize_t(getBankAccounts()[accountNameIndex]->getAmmountOfFunds());
+	size_t withdrawAmount = convertStringToSize_t(amount);
+
+	size_t result = currentAmmount - withdrawAmount;
+
+	std::string resultStr = convertSize_tToString(result);
+	getBankAccounts()[accountNameIndex]->setAmmountOfFunds(resultStr);
+}
+void Client::checkBalanceOfAccount()
+{
+	std::string accountName;
+	std::cout << "$ Input Bank Account name: \n";
+	std::getline(std::cin, accountName);
+	int accountNameIndex = checkAccountName(accountName);
+	if (accountNameIndex == -1)
+	{
+		std::cout << "[ No such bank account exists! ] \n";
+		return;
+	}
+
+	std::cout << getBankAccounts()[accountNameIndex]->getAmmountOfFunds();
+}
 
 Client::Client(const char* username, const char* password, const char* egn, const char* firstName, const char* midName, const char* lastName,
 	const size_t dayOfBirth, const size_t monthOfBirth, const size_t yearOfBirth, const size_t mobileNumber, const char* adress) : 

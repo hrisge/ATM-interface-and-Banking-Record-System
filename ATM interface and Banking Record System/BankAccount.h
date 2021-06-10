@@ -27,15 +27,16 @@ public:
 	void setName(const std::string&, const std::string&);
 	void setName(const std::string&);
 	void setAmmountOfFunds(const std::string&);
-	void setCardsCollections(const char*);
+	void setCardsCollections(const std::string&);
 	void setNumberOfCards(const int);
 
 	int checkCardName(const std::string&);
 	void closeACard(size_t);
+	void deleteCardsCollection();
 
 	void getFromBankAccountNameTheLastFourDigitsOfEgn(std::string&);
 
-	void printBankAccountToFile(const char*);
+	void printBankAccountToFile(const std::string&);
 
 	BankAccount(const std::string&, const std::string&, const std::string&);
 	BankAccount(const std::string&, const std::string&, size_t);

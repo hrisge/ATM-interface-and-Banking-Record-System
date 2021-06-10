@@ -29,11 +29,12 @@ void BankCard::setPIN(const std::string& PIN)
 	this->PIN = atoi(convertToChar(PIN));
 }
 
-void BankCard::printCardToFile(const char* fileName)
+void BankCard::printCardToFile(const std::string& fileName)
 {
 	std::fstream file(fileName, std::ios::app);
 
 	file << getName() << "," << getPIN() << "\n";
+	
 	file.close();
 }
 
