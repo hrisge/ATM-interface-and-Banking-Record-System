@@ -110,6 +110,4 @@ void Admin::addAnEmployee(const std::vector<Employee*>& employees, bool& isValid
 	newEmployee.setDateOfBirth(dateOfbirth);
 	newEmployee.setMobileNumber(mobileNumber);
 	newEmployee.setAdress(adress);
-
-
 }

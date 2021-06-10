@@ -7,15 +7,15 @@
 
 void system();
 
-const std::string& logInAsAdmin(const std::vector<Admin*>&);
-const std::string& logInAsEmployee(const std::vector<Employee*>&);
-const std::string& logInAsClient(const std::vector<Client*>&);
+void logInAsAdmin(const std::vector<Admin*>&, bool&, std::string&);
+void logInAsEmployee(const std::vector<Employee*>&, bool&, std::string&);
+void logInAsClient(const std::vector<Client*>&, bool&, std::string&);
 
 size_t logInCommand();
 
-bool commandForAdmin(bool, std::string&);
-bool commandForEmployees(bool, std::string&);
-bool commandForClients(bool, std::string&);
+bool commandForAdmin(std::string&);
+bool commandForEmployees(std::string&);
+bool commandForClients(std::string&);
 
 void LogInHelpCommand();
 void adminHelpCommand();

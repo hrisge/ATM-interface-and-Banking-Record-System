@@ -1,10 +1,9 @@
 #include "System.h"
 
-const std::string& logInAsAdmin(const std::vector<Admin*>& admins)
+void logInAsAdmin(const std::vector<Admin*>& admins, bool& loggedIn, std::string& egnOfLoggedIn)
 {		
 	system("CLS");
-	bool correctLogIn = false;
-	while (!correctLogIn)
+	while (!loggedIn)
 	{
 		std::cout << "[ Log in as an Admin ] \n";
 		std::string username;
@@ -23,25 +22,29 @@ const std::string& logInAsAdmin(const std::vector<Admin*>& admins)
 				if (password == admins[i]->getAccount().getPassword())
 				{
 					std::cout << "[ You have logged in successfully ] \n";
-					return admins[i]->getEgn();
+					loggedIn = true;
+					egnOfLoggedIn = admins[i]->getEgn();
+					return;
 				}
 				else
 				{
 					std::cout << "[ You have entered invalid password ] \n";
-					std::string empty;
-					return empty;
+					loggedIn = false;
+					egnOfLoggedIn = "1000000000";
+					return;
 				}
 			}
 		}
 		std::cout << "[ You have entered invalid username. Try again! ] \n";
+		loggedIn = false;
+		egnOfLoggedIn = "1000000000";
+		return;
 	}
 }
-const std::string& logInAsEmployee(const std::vector<Employee*>& employees)
+void logInAsEmployee(const std::vector<Employee*>& employees, bool& loggedIn, std::string& egnOfLoggedIn)
 {
-
 	system("CLS");
-	bool correctLogIn = false;
-	while (!correctLogIn)
+	while (!loggedIn)
 	{
 		std::cout << "[ Log in as an Employee] \n";
 		std::string username;
@@ -60,24 +63,29 @@ const std::string& logInAsEmployee(const std::vector<Employee*>& employees)
 				if (password == employees[i]->getAccount().getPassword())
 				{
 					std::cout << "[ You have logged in successfully ] \n";
-					return employees[i]->getEgn();
+					loggedIn = true;
+					egnOfLoggedIn = employees[i]->getEgn();
+					return;
 				}
 				else
 				{
 					std::cout << "[ You have entered invalid password ] \n";
-					std::string empty;
-					return empty;
+					loggedIn = false;
+					egnOfLoggedIn = "1000000000";
+					return;
 				}
 			}
 		}
 		std::cout << "[ You have entered invalid username ] \n";
+		loggedIn = false;
+		egnOfLoggedIn = "1000000000";
+		return;
 	}
 }
-const std::string& logInAsClient(const std::vector<Client*>& clients)
+void logInAsClient(const std::vector<Client*>& clients, bool& loggedIn, std::string& egnOfLoggedIn)
 {
 	system("CLS");
-	bool correctLogIn = false;
-	while (!correctLogIn)
+	while (!loggedIn)
 	{
 		std::cout << "[ Log in as a Client] \n";
 		std::string username;
@@ -96,17 +104,23 @@ const std::string& logInAsClient(const std::vector<Client*>& clients)
 				if (password == clients[i]->getAccount().getPassword())
 				{
 					std::cout << "[ You have logged in successfully ] \n";
-					return clients[i]->getEgn();
+					loggedIn = true;
+					egnOfLoggedIn = clients[i]->getEgn();
+					return;
 				}
 				else
 				{
 					std::cout << "[ You have entered invalid password ] \n";
-					std::string empty;
-					return empty;
+					loggedIn = false;
+					egnOfLoggedIn = "1000000000";
+					return;
 				}
 			}
 		}
 		std::cout << "[ You have entered invalid username ] \n";
+		loggedIn = false;
+		egnOfLoggedIn = "1000000000";
+		return;
 	}
 }
 
@@ -282,7 +296,7 @@ void system()
 	{
 		bool loggedIn = false;
 		std::string egnOfLoggedInPerson;
-		size_t typeOfAccountOfLoggedInPerson;
+		size_t typeOfAccountOfLoggedInPerson = 0;;
 
 		size_t logIn = logInCommand();
 		if (logIn == 0)
@@ -298,21 +312,18 @@ void system()
 		}
 		else if (logIn == 1)
 		{
-			egnOfLoggedInPerson = logInAsAdmin(dataBase.getAdmins());
+			logInAsAdmin(dataBase.getAdmins(), loggedIn, egnOfLoggedInPerson);
 			typeOfAccountOfLoggedInPerson = 1;
-			loggedIn = true;
 		}
 		else if (logIn == 2)
 		{
-			egnOfLoggedInPerson = logInAsEmployee(dataBase.getEmployees());
+			logInAsEmployee(dataBase.getEmployees(), loggedIn, egnOfLoggedInPerson);
 			typeOfAccountOfLoggedInPerson = 2;
-			loggedIn = true;
 		}
 		else
 		{
-			egnOfLoggedInPerson = logInAsClient(dataBase.getClients());
+			logInAsClient(dataBase.getClients(), loggedIn, egnOfLoggedInPerson);
 			typeOfAccountOfLoggedInPerson = 3;
-			loggedIn = true;
 		}
 
 		while (loggedIn)
