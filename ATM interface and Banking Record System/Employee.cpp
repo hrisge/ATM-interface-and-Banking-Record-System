@@ -125,6 +125,7 @@ void Employee::createAClientAccount(std::vector<Client*>& clients, Client& newCl
 	newClient.setAdress(adress);
 	newClient.addABankAccount();
 
+	std::cout << "[ Client account successfully created! ] \n";
 }
 void Employee::createANewBankAccount(Client* client)
 {
@@ -153,7 +154,8 @@ void Employee::reportOfAllClients(const std::vector<Client*>& clients)
 		{
 			totalNumberOfCards += clients[i]->getBankAccounts()[j]->getNumberOfCards();
 		}
-		std::cout << "EGN: " << clients[i]->getEgn() << " Number of Bank Accounts: " << numberOfAccounts << " All cards count: " << totalNumberOfCards << "\n";
+		std::cout << "EGN: " << clients[i]->getEgn() << " Number of Bank Accounts: " << numberOfAccounts << " All cards count: " 
+			<< totalNumberOfCards << "\n";
 	}
 }
 void Employee::personalReportForAClient(const Client* client)
@@ -161,8 +163,10 @@ void Employee::personalReportForAClient(const Client* client)
 	system("CLS");
 	std::cout << "$ individualReport " << client->getEgn() << "\n" << "-------Client------- \n";
 	std::cout << "EGN: " << client->getEgn() << "\n";
-	std::cout << "Name: " << client->getName().getFirstName() << " " << client->getName().getMidName() << " " << client->getName().getLastName() << "\n";
-	std::cout << "BirthDate: " << client->getDateOfBirth().getDay() << " " << client->getDateOfBirth().getMonth() << " " << client->getDateOfBirth().getYear() << "\n";
+	std::cout << "Name: " << client->getName().getFirstName() << " " << client->getName().getMidName() << " " << client->getName().getLastName()
+		<< "\n";
+	std::cout << "BirthDate: " << client->getDateOfBirth().getDay() << " " << client->getDateOfBirth().getMonth() << " " << 
+		client->getDateOfBirth().getYear() << "\n";
 	std::cout << "Phone number: " << client->getMobileNumber() << "\n";
 	std::cout << "Adress: " << client->getAdress() << "\n";
 	std::cout << "Number of Accounts: " << client->getNumberOfAccounts() << "\n";

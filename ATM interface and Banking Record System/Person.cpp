@@ -111,12 +111,7 @@ const std::string& Person::getAdress() const
 
 Person::Person() : account(" ", " "), egn("1000000000"), name(" ", " ", " "), dateOfBirth(1, 1, 1900), mobileNumber(0), adress(" ")
 {
-	//setAccount(nullptr, nullptr);
-	//setEgn("1000000000");
-	//setName(nullptr, nullptr, nullptr);
-	//setDateOfBirth(1, 1, 1900);
-	//setMobileNumber(0);
-	//setAdress(nullptr);
+
 }
 Person::Person(const char* username, const char* password, const char* egn, const char* firstName, const char* midName, const char* lastName,
 	const size_t dayOfBirth, const size_t monthOfBirth, const size_t yearOfBirth, const size_t mobileNumber, const char* adress)

@@ -18,8 +18,6 @@ struct Employee : public Person
 
 	const Employee& getEmployee() const;
 
-	//void printPersonToFile(const char*) const override;
-
 	void createAClientAccount(std::vector<Client*>&, Client&);
 	void createANewBankAccount(Client*);
 	void addANewCardToABankAccount(BankAccount*, const std::string&);

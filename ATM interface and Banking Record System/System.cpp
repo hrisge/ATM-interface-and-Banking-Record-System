@@ -187,7 +187,7 @@ bool commandForClients(std::string& command)
 
 	correctCommand = ((command == "$ help") || (command == "$ deposit") || (command == "$ withdraw") || (command == "$ checkBalance") ||
 		(command == "$ logOut") || (command == "$ exit"));
-	while (correctCommand)
+	while (!correctCommand)
 	{
 		correctCommand = commandForAdmin(command);
 	}

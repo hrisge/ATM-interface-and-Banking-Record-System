@@ -224,7 +224,6 @@ void DataBaseCollection::addAClient(const std::string& employeeEgn)
 	size_t employeeIndex = searchEmployeeByEgn(employeeEgn);
 	Client newOne;
 	employees[employeeIndex]->createAClientAccount(clients, newOne);
-	std::cout << "[ Client account successfully created! ] \n";
 	clients.push_back(new Client(newOne));
 }
 

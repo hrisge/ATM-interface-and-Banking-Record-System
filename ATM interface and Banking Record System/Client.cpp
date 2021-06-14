@@ -211,7 +211,7 @@ void Client::checkBalanceOfAccount()
 		return;
 	}
 
-	std::cout << getBankAccounts()[accountNameIndex]->getAmmountOfFunds();
+	std::cout << getBankAccounts()[accountNameIndex]->getAmmountOfFunds()<<"\n";
 }
 
 Client::Client(const char* username, const char* password, const char* egn, const char* firstName, const char* midName, const char* lastName,
